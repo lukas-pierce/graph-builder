@@ -1,3 +1,12 @@
+// token types
+export const OPERATOR = 'OPERATOR';
+export const FUNCTION = 'FUNCTION';
+export const LEFT_PARENTHESIS = 'LEFT_PARENTHESIS';
+export const RIGHT_PARENTHESIS = 'RIGHT_PARENTHESIS';
+export const FUNCTION_ARGUMENT_SEPARATOR = 'FUNCTION_ARGUMENT_SEPARATOR';
+export const VARIABLE = 'VARIABLE';
+export const LITERAL = 'LITERAL';
+
 export class Tokenizer {
 
   static tokenize(str) {
@@ -16,30 +25,30 @@ export class Tokenizer {
       } else if (isLetter(char)) {
         if (numberBuffer.length) {
           emptyNumberBufferAsLiteral();
-          result.push(new Token("Operator", "*"));
+          result.push(new Token(OPERATOR, "*"));
         }
         letterBuffer.push(char);
       } else if (isOperator(char)) {
         emptyNumberBufferAsLiteral();
         emptyLetterBufferAsVariables();
-        result.push(new Token("Operator", char));
+        result.push(new Token(OPERATOR, char));
       } else if (isLeftParenthesis(char)) {
         if (letterBuffer.length) {
-          result.push(new Token("Function", letterBuffer.join("")));
+          result.push(new Token(FUNCTION, letterBuffer.join("")));
           letterBuffer = [];
         } else if (numberBuffer.length) {
           emptyNumberBufferAsLiteral();
-          result.push(new Token("Operator", "*"));
+          result.push(new Token(OPERATOR, "*"));
         }
-        result.push(new Token("Left Parenthesis", char));
+        result.push(new Token(LEFT_PARENTHESIS, char));
       } else if (isRightParenthesis(char)) {
         emptyLetterBufferAsVariables();
         emptyNumberBufferAsLiteral();
-        result.push(new Token("Right Parenthesis", char));
+        result.push(new Token(RIGHT_PARENTHESIS, char));
       } else if (isComma(char)) {
         emptyNumberBufferAsLiteral();
         emptyLetterBufferAsVariables();
-        result.push(new Token("Function Argument Separator", char));
+        result.push(new Token(FUNCTION_ARGUMENT_SEPARATOR, char));
       }
     });
 
@@ -56,9 +65,9 @@ export class Tokenizer {
     function emptyLetterBufferAsVariables() {
       let l = letterBuffer.length;
       for (let i = 0; i < l; i++) {
-        result.push(new Token("Variable", letterBuffer[i]));
+        result.push(new Token(VARIABLE, letterBuffer[i]));
         if (i < l - 1) { // there are more Variables left
-          result.push(new Token("Operator", "*"));
+          result.push(new Token(OPERATOR, "*"));
         }
       }
       letterBuffer = [];
@@ -66,7 +75,7 @@ export class Tokenizer {
 
     function emptyNumberBufferAsLiteral() {
       if (numberBuffer.length) {
-        result.push(new Token("Literal", numberBuffer.join("")));
+        result.push(new Token(LITERAL, numberBuffer.join("")));
         numberBuffer = [];
       }
     }
