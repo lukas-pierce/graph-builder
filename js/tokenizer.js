@@ -89,6 +89,21 @@ export class Token {
   }
 }
 
+export class TokensCollection {
+  constructor(tokens) {
+    this.tokens = tokens;
+  }
+
+  toString() {
+    const lines = this.tokens.reduce(function (arr, token, index) {
+      const line = index + " => " + token.type + "(" + token.value + ")";
+      arr.push(line);
+      return arr;
+    }, []);
+    return lines.join('\n');
+  }
+}
+
 function isComma(ch) {
   return /,/.test(ch);
 }
