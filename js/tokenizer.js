@@ -85,6 +85,12 @@ export class Tokenizer {
 export class Token {
   constructor(type, value) {
     this.type = type;
+
+    if (isInt(value)) {
+      this.value = parseInt(value);
+    } else if (isFloat(value)) {
+      this.value = parseFloat(value)
+    }
     this.value = value;
   }
 }
@@ -114,6 +120,14 @@ function isComma(ch) {
 
 function isDigit(ch) {
   return /\d/.test(ch);
+}
+
+function isInt(str) {
+  return /^\d+$/.test(str)
+}
+
+function isFloat(str) {
+  return /^[+-]?\d+(\.\d+)?$/.test(str)
 }
 
 function isLetter(ch) {
