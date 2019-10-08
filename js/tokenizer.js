@@ -94,13 +94,17 @@ export class TokensCollection {
     this.tokens = tokens;
   }
 
-  toString() {
+  toDetailString() {
     const lines = this.tokens.reduce(function (arr, token, index) {
       const line = index + " => " + token.type + "(" + token.value + ")";
       arr.push(line);
       return arr;
     }, []);
     return lines.join('\n');
+  }
+
+  toString() {
+    return this.tokens.map(t => t.value).join(' ');
   }
 }
 
