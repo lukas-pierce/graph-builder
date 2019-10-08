@@ -3,11 +3,15 @@
 <head>
   <meta charset="utf-8">
   <title>Math Parser</title>
+  <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
 <form id="math-form">
-  <input name="function">
-  <input type="submit">
+  <label for="expression">Input Math Expression</label>
+  <input name="expression" id="expression" class="form-control" value="1 + 1">
+  <button type="submit" class="btn">Submit</button>
 </form>
+<pre id="tokens"/>
+<script src="./js/index.js" type="module"></script>
 </body>
 </html>
