@@ -7,3 +7,7 @@ Array.prototype.findLastIndex = function (predicate) {
   }
   return -1;
 };
+
+Array.prototype.findIndexFrom = function (predicate, fromIndex) {
+  return this.slice(fromIndex).findIndex(predicate);
+};
