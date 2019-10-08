@@ -90,8 +90,9 @@ export class Token {
       this.value = parseInt(value);
     } else if (isFloat(value)) {
       this.value = parseFloat(value)
+    } else {
+      this.value = value;
     }
-    this.value = value;
   }
 }
 
