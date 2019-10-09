@@ -117,7 +117,7 @@ export class Calculator {
       let left_parentheses_index = tokens.findLastIndex(isLeftParenthesis);
       if (~left_parentheses_index) {
 
-        // найти первую закрывающую скобк идущую после найденой откварющей скобки
+        // найти первую закрывающую скобку идущую после найденой откварющей скобки
         const right_parentheses_index = tokens.findIndexFrom(isRightParenthesis, left_parentheses_index + 1);
 
         // вычисляем внутренние токены которые уже без скобок
