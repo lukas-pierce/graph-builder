@@ -4,7 +4,8 @@
   "description": "Jakesby Test",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "calculator": "node -r esm cli-calculator.js"
   },
   "author": "",
   "license": "ISC",
@@ -12,6 +13,8 @@
     "jest": "^24.9.0"
   },
   "dependencies": {
+    "chalk": "^2.4.2",
+    "command-line-args": "^5.1.1",
     "esm": "^3.2.25"
   }
 }
