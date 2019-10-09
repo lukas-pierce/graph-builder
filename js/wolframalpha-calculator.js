@@ -19,7 +19,7 @@ async function wolframAlphaQuery(input) {
 }
 
 export class WolframAlphaCalculator {
-  async calc(expression, variable, range) {
+  static async calc({expression, variable, range}) {
     // const expression = `x * 2`;
     // const variable = 'x';
     // const range = [0.7, 10, 4];

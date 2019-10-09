@@ -3,12 +3,21 @@
 <head>
   <meta charset="utf-8">
   <title>Math Parser</title>
-  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/style.css" type="text/css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
 </head>
 <body>
 <div class="wrapper">
   <div class="col-left">
     <form id="math-form" name="math-form">
+      <div class="select-calculator">
+        <label>
+          <input type="radio" name="calculator" value="lukas" checked> Lukas Calculator
+        </label>
+        <label>
+          <input type="radio" name="calculator" value="wolfram"> Wolfram Alpha
+        </label>
+      </div>
       <label for="expression">Input Math Expression</label>
       <input name="expression" id="expression" class="form-control" autocomplete="off" placeholder="Math Expression">
       <input name="variableName" maxlength="1" class="form-control" autocomplete="off" placeholder="Variable name">

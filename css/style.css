@@ -44,6 +44,15 @@ form label {
   margin-bottom: .5rem;
 }
 
+.select-calculator {
+  font-size: 12px;
+  margin-bottom: 1rem;
+}
+
+.select-calculator label:first-child {
+  margin-right: 1rem;
+}
+
 .form-control {
   display: block;
   width: 300px;
@@ -84,8 +93,18 @@ form label {
   letter-spacing: 1px;
 }
 
-.btn:hover {
+.btn:not(:disabled):hover {
   background: #5a5f73;
+}
+
+.btn:disabled {
+  background: rgba(68, 72, 87, 0.5);
+  color: rgba(255, 255, 255, 0.5);
+  cursor: not-allowed;
+}
+
+.btn:disabled .fa-spin {
+  color: #fff;
 }
 
 pre {
