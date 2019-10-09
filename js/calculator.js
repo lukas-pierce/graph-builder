@@ -23,18 +23,6 @@ const pipe = (...fns) => fns.reduce(_pipe);
 
 export class Calculator {
 
-  constructor(tokens) {
-    this.tokens = tokens;
-    this.steps = [];
-  }
-
-  _fixStep(desc, tokens) {
-    this.steps.push({
-      desc,
-      tokens: new TokensCollection([...tokens])
-    });
-  }
-
   /**
    * Схлопывает умножение и деление в последовательности токенов без скобок
    * @param tokens
@@ -93,30 +81,27 @@ export class Calculator {
     );
   }
 
-  calc() {
-    while (this.tokens.find(isParenthesis)) {
+  calc(tokens) {
+    while (tokens.find(isParenthesis)) {
       // найти индекс последней открывающей скобки
-      let left_parentheses_index = this.tokens.findLastIndex(isLeftParenthesis);
+      let left_parentheses_index = tokens.findLastIndex(isLeftParenthesis);
       if (~left_parentheses_index) {
 
         // найти первую закрывающую скобк идущую после найденой откварющей скобки
-        const right_parentheses_index = this.tokens.findIndexFrom(isRightParenthesis, left_parentheses_index + 1);
+        const right_parentheses_index = tokens.findIndexFrom(isRightParenthesis, left_parentheses_index + 1);
 
         // вычисляем внутренние токены которые уже без скобок
-        const inside_tokens = this.tokens.slice(left_parentheses_index + 1, right_parentheses_index);
+        const inside_tokens = tokens.slice(left_parentheses_index + 1, right_parentheses_index);
         const result_tokens = this._calcNoParentheses(inside_tokens);
 
         // replace inside tokens
-        const before_tokes = this.tokens.slice(0, left_parentheses_index);
-        const after_tokes = this.tokens.slice(right_parentheses_index + 1);
-        this.tokens = [...before_tokes, ...result_tokens, ...after_tokes];
-        this._fixStep('collapse parentheses', this.tokens);
+        const before_tokes = tokens.slice(0, left_parentheses_index);
+        const after_tokes = tokens.slice(right_parentheses_index + 1);
+        tokens = [...before_tokes, ...result_tokens, ...after_tokes];
       }
     }
 
-    this.tokens = this._calcNoParentheses(this.tokens);
-    this._fixStep('calc no parentheses', this.tokens);
-    return this.tokens;
+    return this._calcNoParentheses(tokens);
   }
 
 }

@@ -13,19 +13,9 @@ import {Calculator} from "./calculator.js";
     if (!expression) return expressionInput.focus();
 
     const tokens = Tokenizer.tokenize(expression);
-
-    const calculator = new Calculator(tokens);
-    const resultTokens = calculator.calc();
-
-    // show steps
-    tokensEl.innerHTML = '';
-    calculator.steps.forEach((step, index) => {
-      tokensEl.innerHTML +=
-        `<span class="step-index">STEP ${(index + 1)}</span>:\n` +
-        `<span class="step-desc">${step.desc}</span>\n` +
-        `<span class="step-tokens">${step.tokens}</span>\n` +
-        '\n';
-    });
+    const calculator = new Calculator();
+    const resultTokens = calculator.calc(tokens);
+    tokensEl.innerHTML = (new TokensCollection(resultTokens)).toString();
 
   })
 
