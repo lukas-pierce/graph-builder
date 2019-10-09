@@ -45,11 +45,11 @@ const custom_fns = {
 ```
     
 ### CLI
-CLI doesn't support variables. But it ease to improve. For run calculator from CLI use
-
+For run calculator from CLI use:
 ```bash
 npm run calculator -- --expression="2 * 2"
 ```
+> ⚠️ **Warning**: CLI doesn't support variables. But it ease to improve.
 
 ### Testing
 For testing uses jest. For run tests
