@@ -108,8 +108,6 @@ export class Calculator {
 
   calc(tokens, variables = {}) {
     this._replaceVariables(tokens, variables);
-    console.log(tokens);
-    return;
 
     while (tokens.find(isParenthesis)) {
       // найти индекс последней открывающей скобки

@@ -19,9 +19,11 @@ import {Calculator, CalculatorError} from './calculator.js';
         x: 10
       });
 
-      resultEl.innerHTML = (new TokensCollection(tokens)).toDetailString();
+      resultEl.innerHTML += 'tokens:\n';
+      resultEl.innerHTML += (new TokensCollection(tokens)).toDetailString();
       resultEl.innerHTML += '\n\n';
-      resultEl.innerHTML += 'Result:' + (new TokensCollection(resultTokens)).toString();
+      resultEl.innerHTML += 'Result:\n';
+      resultEl.innerHTML += (new TokensCollection(resultTokens)).toString();
 
     } catch (e) {
       if (e instanceof CalculatorError) {
