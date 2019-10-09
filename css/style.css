@@ -30,3 +30,7 @@ form input.form-control {
 .step-desc {
     color: cornflowerblue;
 }
+
+.error {
+    color: red;
+}
