@@ -4,9 +4,7 @@
   "description": "Jakesby Test",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
-    "dev": "webpack --progress --hide-modules --mode=development --watch",
-    "build": "webpack --mode=production"
+    "test": "jest"
   },
   "author": "",
   "license": "ISC",
