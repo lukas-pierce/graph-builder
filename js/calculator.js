@@ -61,6 +61,12 @@ export class Calculator {
     return tokens;
   }
 
+  /**
+   * Схлопывает сложение и вычитание в последовательности токенов без скобок
+   * @param tokens
+   * @returns {*}
+   * @private
+   */
   _collapseAddSub(tokens) {
     while (tokens.find(isAddOrSubOperator)) {
       const operatorIndex = tokens.findIndex(isAddOrSubOperator);
