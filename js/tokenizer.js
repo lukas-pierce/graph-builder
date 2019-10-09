@@ -11,6 +11,17 @@ export class Tokenizer {
 
   static tokenize(str) {
     str = str.replace(/\s+/g, "");
+
+    // если строка начинается с плюса или минуса, то добавить в начале 0
+    if (/^[+-]/.test(str)) {
+      str = '0' + str;
+    }
+
+    // если стрка заканчивается плюсом или минусом, то добавать в конец 0
+    if (/[+-]$/.test(str)) {
+      str = str + '0';
+    }
+
     str = str.split("");
 
     const result = [];
