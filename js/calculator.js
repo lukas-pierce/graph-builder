@@ -5,6 +5,7 @@ import {
   LEFT_PARENTHESIS,
   RIGHT_PARENTHESIS,
   VARIABLE,
+  FUNCTION,
   Token,
   TokensCollection
 } from "./tokenizer.js";
@@ -32,6 +33,18 @@ const pow = (a, b) => Math.pow(a, b);
 // Pipe - последовательный вызов функций на результате предыдущией
 const _pipe = (f, g) => (...args) => g(f(...args));
 const pipe = (...fns) => fns.reduce(_pipe);
+
+// custom functions
+const custom_fns = {
+  sqrt: function (num) {
+    return Math.sqrt(num)
+  },
+  plus: function (a, b) {
+    return a + b
+  }
+};
+
+const custom_fns_names = Object.keys(custom_fns);
 
 export class Calculator {
 
@@ -109,6 +122,12 @@ export class Calculator {
     }
   }
 
+  applyCustomFunction(fnName, tokens) {
+    const fn = custom_fns[fnName];
+    const args = tokens.filter(t => t.type === LITERAL).map(t => t.value);
+    return fn(...args);
+  }
+
   calc(tokens, variables = {}) {
     this._replaceVariables(tokens, variables);
 
@@ -122,11 +141,22 @@ export class Calculator {
 
         // вычисляем внутренние токены которые уже без скобок
         const inside_tokens = tokens.slice(left_parentheses_index + 1, right_parentheses_index);
-        const result_tokens = this._calcNoParentheses(inside_tokens);
+        let result_tokens = this._calcNoParentheses(inside_tokens);
 
         // replace inside tokens
         const before_tokens = tokens.slice(0, left_parentheses_index);
         const after_tokens = tokens.slice(right_parentheses_index + 1);
+
+
+        // проверяем предыдущий токен является функцией
+        const prevToken = before_tokens[before_tokens.length - 1];
+        if (prevToken && prevToken.type === FUNCTION && custom_fns_names.includes(prevToken.value)) {
+          const fnName = prevToken.value;
+          const res = this.applyCustomFunction(fnName, result_tokens);
+          result_tokens = [new Token(LITERAL, res)];
+          before_tokens.splice(before_tokens.length - 1, 1);
+        }
+
         tokens = [...before_tokens, ...result_tokens, ...after_tokens];
       }
     }
