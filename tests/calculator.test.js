@@ -1,5 +1,5 @@
 require = require("esm")(module /*, options*/);
-const Calculator = require('../js/calculator').Calculator;
+const {Calculator, CalculatorError} = require('../js/calculator');
 
 const calculator = new Calculator();
 
@@ -60,7 +60,6 @@ let cases = [
   {expression: 'x', should: 21, variables: {x: 21}},
   {expression: '2 * x', should: 10, variables: {x: 5}},
   {expression: '2 * x + a', should: 13, variables: {x: 5, a: 3}},
-  // todo not found variable exception
   // todo variable is not literal exception
 
   // parenthesis
@@ -84,4 +83,14 @@ cases.forEach(_case => {
     const result = calculator.calc(_case.expression, _case.variables || {});
     expect(result).toBe(_case.should);
   });
+});
+
+// undefined variable exception
+test('throws undefined variable in expression: x + 1', () => {
+  function calc() {
+    calculator.calc('x + 1');
+  }
+
+  expect(calc).toThrowError(CalculatorError);
+  expect(calc).toThrowError('undefined variable');
 });
