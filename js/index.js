@@ -1,42 +1,26 @@
-import {Tokenizer, TokensCollection} from './tokenizer.js';
-import {Calculator, CalculatorError} from './calculator.js';
+import {Calculator} from './calculator.js';
+import {Plotter} from './plotter.js';
 
 (function () {
 
   const form = document.getElementById('math-form');
   const expressionInput = form.querySelector('input[name=expression]');
-  const resultEl = document.getElementById('result');
+  const canvas = document.getElementById('canvas');
+  const calculator = new Calculator();
+  const plotter = new Plotter();
 
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     const expression = expressionInput.value.trim().toLocaleLowerCase();
     if (!expression) return expressionInput.focus();
 
-    const tokens = Tokenizer.tokenize(expression);
-    Tokenizer.resolveAddSub(tokens);
+    const x = [-3, -2, -1, 0, 1, 2, 3];
+    const points = x.map(x => {
+      const y = calculator.calc(expression, {x});
+      return [x, y];
+    });
 
-    const calculator = new Calculator();
-    try {
-
-      resultEl.innerHTML = 'tokens:\n';
-      resultEl.innerHTML += (new TokensCollection(tokens)).toDetailString();
-
-      const resultTokens = calculator.calc(tokens, {
-        x: 10
-      });
-
-      resultEl.innerHTML += '\n\n';
-      resultEl.innerHTML += 'Result:\n';
-      resultEl.innerHTML += (new TokensCollection(resultTokens)).toString();
-
-    } catch (e) {
-      if (e instanceof CalculatorError) {
-        resultEl.innerHTML = `<span class="error">` + e.message + `</span>`
-      } else {
-        throw e;
-      }
-    }
-
-  })
+    plotter.render(canvas, points);
+  });
 
 })();

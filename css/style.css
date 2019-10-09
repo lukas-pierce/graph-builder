@@ -12,6 +12,10 @@ form input.form-control {
     margin-bottom: .5rem;
 }
 
+form#math-form {
+    width: 500px;
+}
+
 .btn {
     height: 30px;
     padding: 0 30px;
@@ -33,4 +37,14 @@ pre {
 
 .error {
     color: red;
+}
+
+.wrapper {
+    display: flex;
+}
+
+#canvas {
+    width: 500px;
+    height: 500px;
+    border: 1px solid red;
 }

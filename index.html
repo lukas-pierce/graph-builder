@@ -6,12 +6,19 @@
   <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
-<form id="math-form">
-  <label for="expression">Input Math Expression</label>
-  <input name="expression" id="expression" class="form-control" value="sqrt(4)" autocomplete="off">
-  <button type="submit" class="btn">Submit</button>
-</form>
-<pre id="result"></pre>
+<div class="wrapper">
+  <div class="col-left">
+    <form id="math-form">
+      <label for="expression">Input Math Expression</label>
+      <input name="expression" id="expression" class="form-control" value="x ^ 2" autocomplete="off">
+      <button type="submit" class="btn">Submit</button>
+    </form>
+    <pre id="result"></pre>
+  </div>
+  <div class="col-right">
+    <canvas id="canvas" width="500" height="500"></canvas>
+  </div>
+</div>
 <script src="./js/index.js" type="module"></script>
 </body>
 </html>

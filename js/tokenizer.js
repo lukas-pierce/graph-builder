@@ -71,6 +71,8 @@ export class Tokenizer {
       emptyLetterBufferAsVariables();
     }
 
+    this._resolveAddSub(result);
+
     return result;
 
     function emptyLetterBufferAsVariables() {
@@ -106,7 +108,7 @@ export class Tokenizer {
    *
    * @param tokens
    */
-  static resolveAddSub(tokens) {
+  static _resolveAddSub(tokens) {
     const isOperator = token => token.type === OPERATOR;
     const isAddOrSubOperator = token => token.type === OPERATOR && ['+', '-'].includes(token.value);
 
