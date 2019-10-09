@@ -10,8 +10,9 @@
   <div class="col-left">
     <form id="math-form">
       <label for="expression">Input Math Expression</label>
-      <input name="expression" id="expression" class="form-control" value="x ^ 2" autocomplete="off">
-      <input name="xValues" id="xValues" class="form-control" value="-5;-4;-3;-2;-1;0;1;2;3;4;5" autocomplete="off" placeholder="X values use ; for separation">
+      <input name="expression" id="expression" class="form-control" value="a ^ 2" autocomplete="off">
+      <input name="variableName" maxlength="1" value="a" class="form-control" autocomplete="off" placeholder="Variable name">
+      <input name="values" id="values" class="form-control" value="-5;-4;-3;-2;-1;0;1;2;3;4;5" autocomplete="off" placeholder="values range use ; for separation">
       <button type="submit" class="btn">Submit</button>
     </form>
     <pre id="result"></pre>
