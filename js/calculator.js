@@ -36,12 +36,8 @@ const pipe = (...fns) => fns.reduce(_pipe);
 
 // custom functions
 const custom_fns = {
-  sqrt: function (num) {
-    return Math.sqrt(num)
-  },
-  plus: function (a, b) {
-    return a + b
-  },
+  sqrt: (a) => Math.sqrt(a),
+  plus: (a, b) => a + b,
   round: a => Math.round(a)
 };
 
