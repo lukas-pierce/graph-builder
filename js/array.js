@@ -9,5 +9,5 @@ Array.prototype.findLastIndex = function (predicate) {
 };
 
 Array.prototype.findIndexFrom = function (predicate, fromIndex) {
-  return this.slice(fromIndex).findIndex(predicate);
+  return this.slice(fromIndex).findIndex(predicate) + fromIndex;
 };
