@@ -13,12 +13,13 @@ export class Plotter {
       width: 1
     },
     graph: {
-      color: '#00BCD4',
+      color: '#00bcd4',
       width: 1.5
     },
     grid: {
       color: 'rgba(204,204,204,0.2)',
-      width: 1
+      width: 1,
+      every: 10
     }
   };
 
@@ -92,9 +93,9 @@ export class Plotter {
   }
 
   _renderGridVerticals() {
-    const stepsCount = Math.floor(this.ctx.canvas.clientWidth / 2 / this.config.scale.x);
+    const stepsCount = Math.floor(this.ctx.canvas.clientWidth / 2 / this.config.scale.x / this.config.grid.every);
     for (let i = 0; i <= stepsCount; i++) {
-      const x = i * this.config.scale.x;
+      const x = i * this.config.scale.x * this.config.grid.every;
 
       // from x0 to right
       this._renderGridVerticalLine(x);
@@ -105,9 +106,9 @@ export class Plotter {
   }
 
   _renderGridHorizontals() {
-    const stepsCount = Math.floor(this.ctx.canvas.clientHeight / 2 / this.config.scale.y);
+    const stepsCount = Math.floor(this.ctx.canvas.clientHeight / 2 / this.config.scale.y / this.config.grid.every);
     for (let i = 0; i <= stepsCount; i++) {
-      const y = i * this.config.scale.y;
+      const y = i * this.config.scale.y * this.config.grid.every;
 
       // from y0 to bottom
       this._renderGridHorizontalLine(y);

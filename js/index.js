@@ -13,6 +13,11 @@ import {Plotter} from './plotter.js';
   const plotter = new Plotter();
   plotter.render(canvas, []);
 
+  // example range
+  let range = [];
+  for (let i = -100; i <= 100; i++) range.push(i);
+  valuesInput.value = range.join(';');
+
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     const expression = expressionInput.value.trim().toLocaleLowerCase();
