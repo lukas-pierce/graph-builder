@@ -1,15 +1,13 @@
-# 🚀 Welcome to your new awesome project!
+# Math Expression Parser
 
-This project has been created using **webpack scaffold**, you can now run
-
-```
-npm run build
-```
-
-or
+For run calculator from CLI use
 
 ```
-yarn build
+npm run calculator -- --expression="2 * 2"
 ```
 
-to bundle your application
+For run tests
+
+```
+npm run test
+```
