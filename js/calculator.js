@@ -39,6 +39,7 @@ const custom_fns = {
   sqrt: (a) => Math.sqrt(a),
   plus: (a, b) => a + b,
   round: a => Math.round(a),
+  sin: a => Math.sin(a),
   sum: function () {
     let sum = 0;
     [].forEach.call(arguments, (a) => {

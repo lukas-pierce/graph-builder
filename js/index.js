@@ -20,6 +20,10 @@ import {Plotter} from './plotter.js';
 
     const variableRange = valuesInput.value.trim().toLocaleLowerCase();
     if (!variableRange) return valuesInput.focus();
+    if (!/^[\d;\-+.]+$/.test(variableRange)) {
+      alert('invalid range format');
+      return valuesInput.focus();
+    }
 
     const variableName = variableNameInput.value.trim().toLocaleLowerCase();
     if (!variableName) return variableNameInput.focus();
