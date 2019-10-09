@@ -28,10 +28,10 @@ export class Calculator {
     this.steps = [];
   }
 
-  _fixStep(name = 'step', tokens) {
+  _fixStep(name = 'step') {
     this.steps.push({
       name,
-      tokens: new TokensCollection([...tokens])
+      tokens: new TokensCollection([...this.tokens])
     });
   }
 
@@ -56,8 +56,6 @@ export class Calculator {
 
       // удалить оператор и второй операнд
       tokens.splice(operatorIndex, 2);
-
-      this._fixStep('collapse mul-div');
     }
 
     return tokens;
@@ -78,8 +76,6 @@ export class Calculator {
 
       // удалить оператор и второй операнд
       tokens.splice(operatorIndex, 2);
-
-      this._fixStep('collapse add-sub');
     }
 
     return tokens;
@@ -112,7 +108,9 @@ export class Calculator {
       }
     }
 
-    return this._calcNoParentheses(this.tokens);
+    this.tokens = this._calcNoParentheses(this.tokens);
+    this._fixStep('calc no parentheses');
+    return this.tokens;
   }
 
 }

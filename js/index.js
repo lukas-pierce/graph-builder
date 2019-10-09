@@ -20,10 +20,13 @@ import {Calculator} from "./calculator.js";
     // show steps
     tokensEl.innerHTML = '';
     calculator.steps.forEach((step, index) => {
-      tokensEl.innerHTML += `step ${index}: ${step.name}\n` + step.tokens + '\n\n';
+      tokensEl.innerHTML +=
+        `<span class="step-index">STEP ${(index + 1)}</span>:\n` +
+        `<span class="step-name">${step.name}</span>\n` +
+        `<span class="step-tokens">${step.tokens}</span>\n` +
+        '\n';
     });
 
-    // tokensEl.innerHTML += '\n\nresult:\n' + new TokensCollection(resultTokens);
   })
 
 })();

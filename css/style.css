@@ -21,3 +21,12 @@ form input.form-control {
 #tokens {
     font-family: monospace;
 }
+
+.step-index {
+    font-size: .7rem;
+    color: #9E9E9E;
+}
+
+.step-name {
+    color: cornflowerblue;
+}
