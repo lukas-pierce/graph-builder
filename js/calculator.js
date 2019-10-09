@@ -41,7 +41,8 @@ const custom_fns = {
   },
   plus: function (a, b) {
     return a + b
-  }
+  },
+  round: a => Math.round(a)
 };
 
 const custom_fns_names = Object.keys(custom_fns);
