@@ -8,11 +8,11 @@
 <body>
 <div class="wrapper">
   <div class="col-left">
-    <form id="math-form">
+    <form id="math-form" name="math-form">
       <label for="expression">Input Math Expression</label>
-      <input name="expression" id="expression" class="form-control" value="2sin(x)" autocomplete="off">
-      <input name="variableName" maxlength="1" value="x" class="form-control" autocomplete="off" placeholder="Variable name">
-      <input name="values" id="values" class="form-control" value="-5;-4;-3;-2;-1;0;1;2;3;4;5" autocomplete="off" placeholder="values range use ; for separation">
+      <input name="expression" id="expression" class="form-control" autocomplete="off" placeholder="Math Expression">
+      <input name="variableName" maxlength="1" class="form-control" autocomplete="off" placeholder="Variable name">
+      <input name="values" id="values" class="form-control" autocomplete="off" placeholder="Values Range use ; for separation">
       <button type="submit" class="btn">Submit</button>
     </form>
     <pre id="result"></pre>

@@ -1,5 +1,6 @@
 import {Calculator, CalculatorError} from './calculator.js';
 import {Plotter} from './plotter.js';
+import {range} from "./math.js";
 
 (function () {
 
@@ -13,13 +14,7 @@ import {Plotter} from './plotter.js';
   const plotter = new Plotter();
   plotter.render(canvas, []);
 
-  // example range
-  let range = [];
-  for (let i = -100; i <= 100; i++) range.push(i);
-  valuesInput.value = range.join(';');
-
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
+  function run() {
     const expression = expressionInput.value.trim().toLocaleLowerCase();
     if (!expression) return expressionInput.focus();
 
@@ -52,7 +47,19 @@ import {Plotter} from './plotter.js';
         resultEl.innerHTML = '<span class="error">' + e.message + '</span>'
       } else throw e
     }
+  }
 
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    run();
   });
+
+
+  // example range
+  expressionInput.value = '-sin(x * -2) + x / 2';
+  variableNameInput.value = 'x';
+  valuesInput.value = range(-6, 6, 0.1).map(x => x.toFixed(2)).join(';');
+  run();
+
 
 })();

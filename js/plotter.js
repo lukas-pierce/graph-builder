@@ -5,8 +5,8 @@ export class Plotter {
 
   config = {
     scale: {
-      x: 20,
-      y: 20
+      x: 100,
+      y: 100
     },
     axis: {
       color: '#fff',
@@ -19,7 +19,7 @@ export class Plotter {
     grid: {
       color: 'rgba(204,204,204,0.2)',
       width: 1,
-      every: 10
+      every: 1 // шаг сетки
     }
   };
 
