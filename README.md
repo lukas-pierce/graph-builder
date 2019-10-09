@@ -1,7 +1,15 @@
 # Math Expression Parser
 
 ### Features
-- Basic Math: addiction, subtraction, multiplication, division, unary minus, parentheses, exponentiation `^`
+- Basic Math: 
+    - addiction
+    - subtraction
+    - multiplication
+    - division
+    - unary minus
+    - parentheses
+    - exponentiation `^`
+
 - Multiple +- sign combination support: 
     - `1 + -1`
     - `1 + --1`
@@ -9,7 +17,7 @@
     - `1 / +--1`
     - `1 +++ -----1`
     - ...
-- Custom functions support: `sqrt`, `sin`, `cos`, ... Easy expandable in: `calculator.js`
+- Custom functions: `sqrt`, `sin`, `cos`, etc. Easy expandable in: `calculator.js`
 
 ```javascript
 const custom_fns = {
