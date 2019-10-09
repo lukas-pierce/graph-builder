@@ -7,8 +7,8 @@ import {
   VARIABLE,
   FUNCTION,
   Token,
-  TokensCollection
-} from "./tokenizer.js";
+  Tokenizer,
+} from './tokenizer.js';
 
 const isAddOperator = token => token.type === OPERATOR && token.value === '+';
 const isSubOperator = token => token.type === OPERATOR && token.value === '-';
@@ -128,7 +128,8 @@ export class Calculator {
     return fn(...args);
   }
 
-  calc(tokens, variables = {}) {
+  calc(expression, variables = {}) {
+    let tokens = Tokenizer.tokenize(expression);
     this._replaceVariables(tokens, variables);
 
     while (tokens.find(isParenthesis)) {
@@ -161,7 +162,7 @@ export class Calculator {
       }
     }
 
-    return this._calcNoParentheses(tokens);
+    return this._calcNoParentheses(tokens)[0].value;
   }
 
 }
