@@ -4,7 +4,10 @@ export class Plotter {
   y0 = 0;
 
   config = {
-    scale: 100,
+    scale: {
+      x: 20,
+      y: 20
+    },
     axis: {
       color: '#00f',
       width: 1
@@ -24,8 +27,8 @@ export class Plotter {
   }
 
   _coordinates(point) {
-    const x = point[0] * this.config.scale + this.x0;
-    const y = point[1] * this.config.scale * -1 + this.y0;
+    const x = point[0] * this.config.scale.x + this.x0;
+    const y = point[1] * this.config.scale.y * -1 + this.y0;
     return [x, y];
   }
 
@@ -89,9 +92,9 @@ export class Plotter {
   }
 
   _renderGridVerticals() {
-    const stepsCount = Math.floor(this.ctx.canvas.clientWidth / 2 / this.config.scale);
+    const stepsCount = Math.floor(this.ctx.canvas.clientWidth / 2 / this.config.scale.x);
     for (let i = 0; i <= stepsCount; i++) {
-      const x = i * this.config.scale;
+      const x = i * this.config.scale.x;
 
       // from x0 to right
       this._renderGridVerticalLine(x);
@@ -102,9 +105,9 @@ export class Plotter {
   }
 
   _renderGridHorizontals() {
-    const stepsCount = Math.floor(this.ctx.canvas.clientHeight / 2 / this.config.scale);
+    const stepsCount = Math.floor(this.ctx.canvas.clientHeight / 2 / this.config.scale.y);
     for (let i = 0; i <= stepsCount; i++) {
-      const y = i * this.config.scale;
+      const y = i * this.config.scale.y;
 
       // from y0 to bottom
       this._renderGridHorizontalLine(y);
