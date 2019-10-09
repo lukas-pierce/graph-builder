@@ -38,8 +38,8 @@ export class Plotter {
     ctx.beginPath();
     const startPoint = points[0];
     ctx.moveTo(...this._coordinates(startPoint));
-    points.splice(1).forEach(point => {
-      ctx.lineTo(...this._coordinates(point))
+    points.forEach((point, index) => {
+      if (index > 0) ctx.lineTo(...this._coordinates(point))
     });
     ctx.stroke();
   }
