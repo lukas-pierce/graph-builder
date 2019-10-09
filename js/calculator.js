@@ -38,7 +38,14 @@ const pipe = (...fns) => fns.reduce(_pipe);
 const custom_fns = {
   sqrt: (a) => Math.sqrt(a),
   plus: (a, b) => a + b,
-  round: a => Math.round(a)
+  round: a => Math.round(a),
+  sum: function () {
+    let sum = 0;
+    [].forEach.call(arguments, (a) => {
+      sum += a;
+    });
+    return sum;
+  }
 };
 
 const custom_fns_names = Object.keys(custom_fns);
