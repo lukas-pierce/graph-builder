@@ -60,7 +60,6 @@ let cases = [
   {expression: 'x', should: 21, variables: {x: 21}},
   {expression: '2 * x', should: 10, variables: {x: 5}},
   {expression: '2 * x + a', should: 13, variables: {x: 5, a: 3}},
-  // todo variable is not literal exception
 
   // parenthesis
   {expression: '(2)', should: 2},
@@ -93,4 +92,13 @@ test('throws undefined variable in expression: x + 1', () => {
 
   expect(calc).toThrowError(CalculatorError);
   expect(calc).toThrowError('undefined variable');
+});
+
+// not number variable exception
+test('throws variable is not number: x + x, x = \'a\'', () => {
+  function calc() {
+    calculator.calc('x + x', {x: 'a'});
+  }
+  expect(calc).toThrowError(CalculatorError);
+  expect(calc).toThrowError('variable is not number');
 });

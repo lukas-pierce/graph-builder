@@ -118,6 +118,13 @@ export class Calculator {
         const variableName = token.value;
         if (variablesNames.includes(variableName)) {
           const variableValue = variablesMap[variableName];
+
+          // check variable is number
+          const isNum = /^[+-]?\d+(\.\d+)?$/.test('' + variableValue);
+          if (!isNum) {
+            throw new CalculatorError('variable is not number');
+          }
+
           tokens[i] = new Token(LITERAL, variableValue);
         } else {
           throw new CalculatorError(`undefined variable in expression: <b>${variableName}</b>`);
