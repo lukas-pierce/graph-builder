@@ -11,3 +11,6 @@ For run tests
 ```
 npm run test
 ```
+
+TODO 
+- validate expression
