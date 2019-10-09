@@ -15,12 +15,14 @@ import {Calculator, CalculatorError} from './calculator.js';
     const tokens = Tokenizer.tokenize(expression);
     const calculator = new Calculator();
     try {
+
+      resultEl.innerHTML = 'tokens:\n';
+      resultEl.innerHTML += (new TokensCollection(tokens)).toDetailString();
+
       const resultTokens = calculator.calc(tokens, {
         x: 10
       });
 
-      resultEl.innerHTML = 'tokens:\n';
-      resultEl.innerHTML += (new TokensCollection(tokens)).toDetailString();
       resultEl.innerHTML += '\n\n';
       resultEl.innerHTML += 'Result:\n';
       resultEl.innerHTML += (new TokensCollection(resultTokens)).toString();

@@ -13,8 +13,10 @@ const isAddOperator = token => token.type === OPERATOR && token.value === '+';
 const isSubOperator = token => token.type === OPERATOR && token.value === '-';
 const isMulOperator = token => token.type === OPERATOR && token.value === '*';
 const isDivOperator = token => token.type === OPERATOR && token.value === '/';
+const isPowOperator = token => token.type === OPERATOR && token.value === '^';
 const isAddOrSubOperator = token => isAddOperator(token) || isSubOperator(token);
 const isMulOrDivOperator = token => isMulOperator(token) || isDivOperator(token);
+const isMulOrDivOrPowOperator = token => isMulOperator(token) || isDivOperator(token) || isPowOperator(token);
 const isLeftParenthesis = token => token.type === LEFT_PARENTHESIS && token.value === '(';
 const isRightParenthesis = token => token.type === RIGHT_PARENTHESIS && token.value === ')';
 const isParenthesis = token => isLeftParenthesis(token) || isRightParenthesis(token);
@@ -25,6 +27,7 @@ const add = (a, b) => a + b;
 const sub = (a, b) => a - b;
 const mul = (a, b) => a * b;
 const div = (a, b) => a / b;
+const pow = (a, b) => Math.pow(a, b);
 
 // Pipe - последовательный вызов функций на результате предыдущией
 const _pipe = (f, g) => (...args) => g(f(...args));
@@ -38,14 +41,14 @@ export class Calculator {
    * @returns {*}
    * @private
    */
-  _collapseMulDiv(tokens) {
-    while (tokens.find(isMulOrDivOperator)) {
-      const operatorIndex = tokens.findIndex(isMulOrDivOperator);
+  _collapseMulDivPow(tokens) {
+    while (tokens.find(isMulOrDivOrPowOperator)) {
+      const operatorIndex = tokens.findIndex(isMulOrDivOrPowOperator);
       const operator = tokens[operatorIndex];
       const operand1 = tokens[operatorIndex - 1];
       const operand2 = tokens[operatorIndex + 1];
 
-      const operation = isMulOperator(operator) ? mul : div;
+      const operation = isMulOperator(operator) ? mul : (isDivOperator(operator) ? div : pow);
       const result = operation(operand1.value, operand2.value);
 
       // вместо первого операнда вставить результат
@@ -86,7 +89,7 @@ export class Calculator {
 
   _calcNoParentheses(tokens) {
     return this._collapseAddSub(
-      this._collapseMulDiv(tokens)
+      this._collapseMulDivPow(tokens)
     );
   }
 
