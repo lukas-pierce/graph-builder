@@ -91,6 +91,70 @@ export class Tokenizer {
       }
     }
   }
+
+
+  /**
+   * Принцип работы этого метода:
+   * 1. Найти позицию комбинации двух операторов: любой затем минус или минус (startIndex)
+   * 2. Начиная с позиции найденой на шаге 1 искать позицию первого плюса или минуса включая исходную позицию (startSignIndex)
+   * 3. Начиная с позиции найденой на шаге 2 искать позицию токена не являющегося плюсом или минусом
+   * 4. Для последлватьельность токенов +-+--- вычисляем знак испольязу умножение +1 и -1
+   * 5. Замеменям последовательность опрераторов начиная с startSignIndex:
+   *      - если комбинация на шаге 1 начиналась с плюса или минуса: то заменяем на токены ['+', 'знак', '*']
+   *      - если комбинация на шаге 1 начиналась с другого оператора: то заменяем на токены ['знак', '*']
+   *    где 'знак' - это +1 или -1
+   *
+   * @param tokens
+   */
+  static resolveAddSub(tokens) {
+    const isOperator = token => token.type === OPERATOR;
+    const isAddOrSubOperator = token => token.type === OPERATOR && ['+', '-'].includes(token.value);
+
+    // найти начало комбинации токенов когда идет любой операторт а потом оператор сложения или вычитания
+    const getStartIndex = tokes => tokens.findIndex((token, index) => {
+      if (isOperator(token)) {
+        const nextToken = tokens[index + 1];
+        if (nextToken && isAddOrSubOperator(nextToken)) {
+          return true
+        }
+      }
+      return false
+    });
+
+    let startIndex;
+    do {
+      startIndex = getStartIndex(tokens);
+
+      if (~startIndex) {
+        const startSignIndex = tokens.findIndexFrom(isAddOrSubOperator, startIndex);
+        const endIndex = tokens.findIndexFrom(token => !isAddOrSubOperator(token), startSignIndex);
+
+        let sign = 1;
+        for (let i = startSignIndex; i < endIndex; i++) {
+          const signToken = tokens[i];
+          if (signToken.value === '+') {
+            sign *= 1
+          } else {
+            sign *= -1
+          }
+        }
+
+        const signToken = new Token(LITERAL, sign);
+        const multiple = new Token(OPERATOR, '*');
+
+        const insertTokes = [signToken, multiple];
+        if (startSignIndex === startIndex) {
+          const plus = new Token(OPERATOR, '+');
+          insertTokes.unshift(plus)
+        }
+
+        const removeCount = endIndex - startSignIndex;
+        tokens.splice(startSignIndex, removeCount, ...insertTokes);
+      }
+
+    } while (~startIndex);
+
+  }
 }
 
 export class Token {
