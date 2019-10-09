@@ -39,14 +39,22 @@ const custom_fns = {
   sqrt: (a) => Math.sqrt(a),
   plus: (a, b) => a + b,
   round: a => Math.round(a),
-  sin: a => Math.sin(a),
+  abs: a => Math.abs(a),
   sum: function () {
     let sum = 0;
     [].forEach.call(arguments, (a) => {
       sum += a;
     });
     return sum;
-  }
+  },
+
+  // trigonometry
+  sin: a => Math.sin(a),
+  cos: a => Math.cos(a),
+  tan: a => Math.tan(a),
+  atan: a => Math.atan(a),
+  //...
+
 };
 
 const custom_fns_names = Object.keys(custom_fns);
