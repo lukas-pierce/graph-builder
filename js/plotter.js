@@ -1,16 +1,20 @@
 export class Plotter {
 
-  scale = 10;
   x0 = 0;
   y0 = 0;
 
   config = {
+    scale: 100,
     axis: {
       color: '#00f',
       width: 1
     },
     graph: {
       color: '#000',
+      width: 1
+    },
+    grid: {
+      color: '#ccc',
       width: 1
     }
   };
@@ -20,8 +24,8 @@ export class Plotter {
   }
 
   _coordinates(point) {
-    const x = point[0] * this.scale + this.x0;
-    const y = point[1] * this.scale * -1 + this.y0;
+    const x = point[0] * this.config.scale + this.x0;
+    const y = point[1] * this.config.scale * -1 + this.y0;
     return [x, y];
   }
 
@@ -33,6 +37,10 @@ export class Plotter {
   _initCenter() {
     this.x0 = this.ctx.canvas.clientWidth / 2;
     this.y0 = this.ctx.canvas.clientHeight / 2;
+
+    // canvas pixel adjustment
+    if (Number.isInteger(this.x0)) this.x0 += .5;
+    if (Number.isInteger(this.y0)) this.y0 += .5;
   }
 
   _renderAxisY() {
@@ -66,12 +74,59 @@ export class Plotter {
     this.ctx.stroke();
   }
 
+  _renderGridVerticalLine(x) {
+    this.ctx.beginPath();
+    this.ctx.moveTo(x + this.x0, 0);
+    this.ctx.lineTo(x + this.x0, this.ctx.canvas.clientHeight);
+    this.ctx.stroke();
+  }
+
+  _renderGridHorizontalLine(y) {
+    this.ctx.beginPath();
+    this.ctx.moveTo(0, y + this.y0);
+    this.ctx.lineTo(this.ctx.canvas.clientWidth, y + this.y0);
+    this.ctx.stroke();
+  }
+
+  _renderGridVerticals() {
+    const stepsCount = Math.floor(this.ctx.canvas.clientWidth / 2 / this.config.scale);
+    for (let i = 0; i <= stepsCount; i++) {
+      const x = i * this.config.scale;
+
+      // from x0 to right
+      this._renderGridVerticalLine(x);
+
+      // from x0 to left
+      if (i > 0) this._renderGridVerticalLine(-x);
+    }
+  }
+
+  _renderGridHorizontals() {
+    const stepsCount = Math.floor(this.ctx.canvas.clientHeight / 2 / this.config.scale);
+    for (let i = 0; i <= stepsCount; i++) {
+      const y = i * this.config.scale;
+
+      // from y0 to bottom
+      this._renderGridHorizontalLine(y);
+
+      // from y0 to top
+      if (i > 0) this._renderGridHorizontalLine(-y);
+    }
+  }
+
+  _renderGrid() {
+    this.ctx.lineWidth = this.config.grid.width;
+    this.ctx.strokeStyle = this.config.grid.color;
+    this._renderGridVerticals();
+    this._renderGridHorizontals();
+  }
+
   render(canvas, points) {
     this.ctx = canvas.getContext('2d');
 
     this.clear();
     this._initCenter();
-    // todo render grid
+    this._renderGrid();
     this._renderAxisY();
     this._renderAxisX();
     this._renderGraph(points);
