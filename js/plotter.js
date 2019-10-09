@@ -9,15 +9,15 @@ export class Plotter {
       y: 20
     },
     axis: {
-      color: '#00f',
+      color: '#fff',
       width: 1
     },
     graph: {
-      color: '#000',
-      width: 1
+      color: '#00BCD4',
+      width: 1.5
     },
     grid: {
-      color: '#ccc',
+      color: 'rgba(204,204,204,0.2)',
       width: 1
     }
   };
@@ -125,6 +125,10 @@ export class Plotter {
   }
 
   render(canvas, points) {
+    // set size, absolute positioned
+    canvas.width = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+
     this.ctx = canvas.getContext('2d');
 
     this.clear();

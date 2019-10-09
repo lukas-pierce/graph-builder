@@ -1,50 +1,109 @@
-form label {
-    display: inline-block;
-    margin-bottom: .5rem;
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 
-form input.form-control {
-    display: block;
-    width: 300px;
-    max-width: 100%;
-    border: 1px solid darkgray;
-    height: 30px;
-    margin-bottom: .5rem;
+html {
+  background: #131418;
+  color: #fff;
 }
 
-form#math-form {
-    width: 500px;
+body {
+  font-family: Verdana, Geneva, sans-serif;
+  font-size: 14px;
 }
 
-.btn {
-    height: 30px;
-    padding: 0 30px;
-    display: inline-block;
-}
-
-pre {
-    font-family: monospace;
-}
-
-.step-index {
-    font-size: .7rem;
-    color: #9E9E9E;
-}
-
-.step-desc {
-    color: cornflowerblue;
-}
-
-.error {
-    color: red;
+html, body {
+  height: 100%;
 }
 
 .wrapper {
-    display: flex;
+  height: 100%;
+  display: flex;
+}
+
+.col-left {
+  width: 300px;
+  max-width: 300px;
+  padding: 15px;
+  overflow: hidden;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  background: #1e1f26;
+}
+
+.col-right {
+  position: relative;
+  flex: 1 1 auto;
+}
+
+form label {
+  display: inline-block;
+  margin-bottom: .5rem;
+}
+
+.form-control {
+  display: block;
+  width: 300px;
+  max-width: 100%;
+  border: 1px solid darkgray;
+  height: 30px;
+  padding: 0 7px;
+  margin-bottom: .5rem;
+  background: #262830;
+  color: #fff;
+  outline: 0;
+}
+
+.btn {
+  height: 30px;
+  padding: 0 30px;
+  display: inline-block;
+  background: #444857;
+  color: white;
+  border: 0;
+  font-size: 14px;
+  font-weight: bold;
+  outline: 0;
+  cursor: pointer;
+  line-height: 1;
+  letter-spacing: 1px;
+}
+
+.btn:hover {
+  background: #5a5f73;
+}
+
+pre {
+  font-family: monospace;
+  color: #00bcd4;
+  overflow: auto;
+  padding: 10px;
+  margin-left: -10px;
+  margin-right: -10px;
+  font-size: 13px;
+  flex: 1 1 auto;
+}
+
+.step-index {
+  font-size: .7rem;
+  color: #9e9e9e;
+}
+
+.step-desc {
+  color: cornflowerblue;
+}
+
+.error {
+  color: #ff5722;
 }
 
 #canvas {
-    width: 500px;
-    height: 500px;
-    border: 1px solid red;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
