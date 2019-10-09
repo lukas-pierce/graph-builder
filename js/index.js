@@ -13,6 +13,8 @@ import {Calculator, CalculatorError} from './calculator.js';
     if (!expression) return expressionInput.focus();
 
     const tokens = Tokenizer.tokenize(expression);
+    Tokenizer.resolveAddSub(tokens);
+
     const calculator = new Calculator();
     try {
 
