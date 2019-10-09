@@ -19,7 +19,7 @@ import {Calculator, CalculatorError} from './calculator.js';
         x: 10
       });
 
-      resultEl.innerHTML += 'tokens:\n';
+      resultEl.innerHTML = 'tokens:\n';
       resultEl.innerHTML += (new TokensCollection(tokens)).toDetailString();
       resultEl.innerHTML += '\n\n';
       resultEl.innerHTML += 'Result:\n';
