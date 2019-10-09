@@ -59,6 +59,11 @@ let cases = [
   // variables
   {expression: 'x', should: 21, variables: {x: 21}},
   {expression: '2 * x', should: 10, variables: {x: 5}},
+  {expression: '2 * x', should: -10, variables: {x: -5}},
+  {expression: '2 + x', should: -8, variables: {x: -10}},
+  {expression: '2 - x', should: 12, variables: {x: -10}},
+  {expression: '-2 -x', should: 8, variables: {x: -10}},
+  {expression: '-2 -x*-1', should: -12, variables: {x: -10}},
   {expression: '2 * x + a', should: 13, variables: {x: 5, a: 3}},
 
   // parenthesis
@@ -78,8 +83,20 @@ if (~breakInx) {
 }
 
 cases.forEach(_case => {
-  test(`${_case.expression} = ${_case.should}`, () => {
-    const result = calculator.calc(_case.expression, _case.variables || {});
+  const variables = _case.variables || {};
+
+  // test description
+  let desc = `${_case.expression} = ${_case.should}`;
+  if (Object.keys(variables).length) {
+    const vars = [];
+    for (let key in variables) {
+      vars.push(`${key} = ${variables[key]}`);
+    }
+    desc += '; vars ' + vars.join(', ');
+  }
+
+  test(desc, () => {
+    const result = calculator.calc(_case.expression, variables);
     expect(result).toBe(_case.should);
   });
 });
