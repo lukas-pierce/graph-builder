@@ -1,14 +1,52 @@
 # Math Expression Parser
 
-For run calculator from CLI use
+### Features
+- Basic Math: addiction, subtraction, multiplication, division, unary minus, parentheses, exponentiation `^`
+- Multiple +- sign combination support: 
+    - `1 + -1`
+    - `1 + --1`
+    - `1 * -1`
+    - `1 / +--1`
+    - `1 +++ -----1`
+    - ...
+- Custom functions support: `sqrt`, `sin`, `cos`, ... Easy expandable in: `calculator.js`
 
+```javascript
+const custom_fns = {
+  sqrt: (a) => Math.sqrt(a),
+  plus: (a, b) => a + b,
+  round: a => Math.round(a),
+  abs: a => Math.abs(a),
+  sum: function () {
+    let sum = 0;
+    [].forEach.call(arguments, (a) => {
+      sum += a;
+    });
+    return sum;
+  },
+
+  // trigonometry
+  sin: a => Math.sin(a),
+  cos: a => Math.cos(a),
+  tan: a => Math.tan(a),
+  atan: a => Math.atan(a),
+
+  //...
+
+};
 ```
+    
+### CLI
+CLI doesn't support variables. But it ease to improve. For run calculator from CLI use
+
+```bash
 npm run calculator -- --expression="2 * 2"
 ```
 
-For run tests
+### Testing
+For testing uses jest. For run tests
 
-```
+```bash
 npm run test
 ```
 
