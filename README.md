@@ -1,4 +1,6 @@
-# Math Expression Parser
+# Math Expression Parser and Graph Builder
+
+![demo screenshot](demo-pic.jpg "Math Expression Parser and Graph Builder")
 
 ### Features
 - Basic Math: 
