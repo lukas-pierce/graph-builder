@@ -1,5 +1,13 @@
 import './array.js';
-import {OPERATOR, LITERAL, LEFT_PARENTHESIS, RIGHT_PARENTHESIS, Token, TokensCollection} from "./tokenizer.js";
+import {
+  OPERATOR,
+  LITERAL,
+  LEFT_PARENTHESIS,
+  RIGHT_PARENTHESIS,
+  VARIABLE,
+  Token,
+  TokensCollection
+} from "./tokenizer.js";
 
 const isAddOperator = token => token.type === OPERATOR && token.value === '+';
 const isSubOperator = token => token.type === OPERATOR && token.value === '-';
@@ -10,6 +18,7 @@ const isMulOrDivOperator = token => isMulOperator(token) || isDivOperator(token)
 const isLeftParenthesis = token => token.type === LEFT_PARENTHESIS && token.value === '(';
 const isRightParenthesis = token => token.type === RIGHT_PARENTHESIS && token.value === ')';
 const isParenthesis = token => isLeftParenthesis(token) || isRightParenthesis(token);
+const isVariable = token => token.type === VARIABLE;
 
 // операции
 const add = (a, b) => a + b;
@@ -81,7 +90,27 @@ export class Calculator {
     );
   }
 
-  calc(tokens) {
+  _replaceVariables(tokens, variablesMap = {}) {
+    const variablesNames = Object.keys(variablesMap);
+    for (let i = 0; i < tokens.length; i++) {
+      const token = tokens[i];
+      if (isVariable(token)) {
+        const variableName = token.value;
+        if (variablesNames.includes(variableName)) {
+          const variableValue = variablesMap[variableName];
+          tokens[i] = new Token(LITERAL, variableValue);
+        } else {
+          throw new CalculatorError(`undefined variable in expression: <b>${variableName}</b>`);
+        }
+      }
+    }
+  }
+
+  calc(tokens, variables = {}) {
+    this._replaceVariables(tokens, variables);
+    console.log(tokens);
+    return;
+
     while (tokens.find(isParenthesis)) {
       // найти индекс последней открывающей скобки
       let left_parentheses_index = tokens.findLastIndex(isLeftParenthesis);
@@ -104,4 +133,7 @@ export class Calculator {
     return this._calcNoParentheses(tokens);
   }
 
+}
+
+export class CalculatorError extends Error {
 }

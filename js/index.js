@@ -1,11 +1,11 @@
 import {Tokenizer, TokensCollection} from './tokenizer.js';
-import {Calculator} from "./calculator.js";
+import {Calculator, CalculatorError} from './calculator.js';
 
 (function () {
 
   const form = document.getElementById('math-form');
   const expressionInput = form.querySelector('input[name=expression]');
-  const tokensEl = document.getElementById('tokens');
+  const resultEl = document.getElementById('result');
 
   form.addEventListener('submit', function (e) {
     e.preventDefault();
@@ -14,8 +14,22 @@ import {Calculator} from "./calculator.js";
 
     const tokens = Tokenizer.tokenize(expression);
     const calculator = new Calculator();
-    const resultTokens = calculator.calc(tokens);
-    tokensEl.innerHTML = (new TokensCollection(resultTokens)).toString();
+    try {
+      const resultTokens = calculator.calc(tokens, {
+        x: 10
+      });
+
+      resultEl.innerHTML = (new TokensCollection(tokens)).toDetailString();
+      resultEl.innerHTML += '\n\n';
+      resultEl.innerHTML += 'Result:' + (new TokensCollection(resultTokens)).toString();
+
+    } catch (e) {
+      if (e instanceof CalculatorError) {
+        resultEl.innerHTML = `<span class="error">` + e.message + `</span>`
+      } else {
+        throw e;
+      }
+    }
 
   })
 
