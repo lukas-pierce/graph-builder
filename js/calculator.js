@@ -125,9 +125,9 @@ export class Calculator {
         const result_tokens = this._calcNoParentheses(inside_tokens);
 
         // replace inside tokens
-        const before_tokes = tokens.slice(0, left_parentheses_index);
-        const after_tokes = tokens.slice(right_parentheses_index + 1);
-        tokens = [...before_tokes, ...result_tokens, ...after_tokes];
+        const before_tokens = tokens.slice(0, left_parentheses_index);
+        const after_tokens = tokens.slice(right_parentheses_index + 1);
+        tokens = [...before_tokens, ...result_tokens, ...after_tokens];
       }
     }
 
