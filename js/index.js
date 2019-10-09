@@ -22,7 +22,7 @@ import {Calculator} from "./calculator.js";
     calculator.steps.forEach((step, index) => {
       tokensEl.innerHTML +=
         `<span class="step-index">STEP ${(index + 1)}</span>:\n` +
-        `<span class="step-name">${step.name}</span>\n` +
+        `<span class="step-desc">${step.desc}</span>\n` +
         `<span class="step-tokens">${step.tokens}</span>\n` +
         '\n';
     });

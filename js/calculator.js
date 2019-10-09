@@ -28,10 +28,10 @@ export class Calculator {
     this.steps = [];
   }
 
-  _fixStep(name = 'step') {
+  _fixStep(desc, tokens) {
     this.steps.push({
-      name,
-      tokens: new TokensCollection([...this.tokens])
+      desc,
+      tokens: new TokensCollection([...tokens])
     });
   }
 
@@ -110,12 +110,12 @@ export class Calculator {
         const before_tokes = this.tokens.slice(0, left_parentheses_index);
         const after_tokes = this.tokens.slice(right_parentheses_index + 1);
         this.tokens = [...before_tokes, ...result_tokens, ...after_tokes];
-        this._fixStep('collapse parentheses');
+        this._fixStep('collapse parentheses', this.tokens);
       }
     }
 
     this.tokens = this._calcNoParentheses(this.tokens);
-    this._fixStep('calc no parentheses');
+    this._fixStep('calc no parentheses', this.tokens);
     return this.tokens;
   }
 
