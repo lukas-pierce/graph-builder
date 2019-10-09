@@ -11,6 +11,7 @@ import {Plotter} from './plotter.js';
   const canvas = document.getElementById('canvas');
   const calculator = new Calculator();
   const plotter = new Plotter();
+  plotter.render(canvas, []);
 
   form.addEventListener('submit', function (e) {
     e.preventDefault();

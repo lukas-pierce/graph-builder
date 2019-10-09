@@ -48,7 +48,7 @@ form label {
   display: block;
   width: 300px;
   max-width: 100%;
-  border: 1px solid darkgray;
+  border: 1px solid #a9a9a9;
   height: 30px;
   padding: 0 7px;
   margin-bottom: .5rem;
