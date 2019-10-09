@@ -1,5 +1,5 @@
 import './array.js';
-import {OPERATOR, LITERAL, Token, TokensCollection} from "./tokenizer.js";
+import {OPERATOR, LITERAL, LEFT_PARENTHESIS, RIGHT_PARENTHESIS, Token, TokensCollection} from "./tokenizer.js";
 
 const isAddOperator = token => token.type === OPERATOR && token.value === '+';
 const isSubOperator = token => token.type === OPERATOR && token.value === '-';
@@ -7,6 +7,9 @@ const isMulOperator = token => token.type === OPERATOR && token.value === '*';
 const isDivOperator = token => token.type === OPERATOR && token.value === '/';
 const isAddOrSubOperator = token => isAddOperator(token) || isSubOperator(token);
 const isMulOrDivOperator = token => isMulOperator(token) || isDivOperator(token);
+const isLeftParenthesis = token => token.type === LEFT_PARENTHESIS && token.value === '(';
+const isRightParenthesis = token => token.type === RIGHT_PARENTHESIS && token.value === ')';
+const isParenthesis = token => isLeftParenthesis(token) || isRightParenthesis(token);
 
 // операции
 const add = (a, b) => a + b;
@@ -25,6 +28,13 @@ export class Calculator {
     this.steps = [];
   }
 
+  _fixStep(name = 'step', tokens) {
+    this.steps.push({
+      name,
+      tokens: new TokensCollection([...tokens])
+    });
+  }
+
   /**
    * Схлопывает умножение и деление в последовательности токенов без скобок
    * @param tokens
@@ -32,60 +42,77 @@ export class Calculator {
    * @private
    */
   _collapseMulDiv(tokens) {
-    const _tokens = [...tokens]; // clone
-
-    while (_tokens.find(isMulOrDivOperator)) {
-      const operatorIndex = _tokens.findIndex(isMulOrDivOperator);
-      const operator = _tokens[operatorIndex];
-      const operand1 = _tokens[operatorIndex - 1];
-      const operand2 = _tokens[operatorIndex + 1];
+    while (tokens.find(isMulOrDivOperator)) {
+      const operatorIndex = tokens.findIndex(isMulOrDivOperator);
+      const operator = tokens[operatorIndex];
+      const operand1 = tokens[operatorIndex - 1];
+      const operand2 = tokens[operatorIndex + 1];
 
       const operation = isMulOperator(operator) ? mul : div;
       const result = operation(operand1.value, operand2.value);
 
       // вместо первого операнда вставить результат
-      _tokens[operatorIndex - 1] = new Token(LITERAL, result);
+      tokens[operatorIndex - 1] = new Token(LITERAL, result);
 
       // удалить оператор и второй операнд
-      _tokens.splice(operatorIndex, 2);
+      tokens.splice(operatorIndex, 2);
 
-      this.steps.push(new TokensCollection([..._tokens]));
+      this._fixStep('collapse mul-div');
     }
 
-    return _tokens;
+    return tokens;
   }
 
   _collapseAddSub(tokens) {
-    const _tokens = [...tokens]; // clone
-
-    while (_tokens.find(isAddOrSubOperator)) {
-      const operatorIndex = _tokens.findIndex(isAddOrSubOperator);
-      const operator = _tokens[operatorIndex];
-      const operand1 = _tokens[operatorIndex - 1];
-      const operand2 = _tokens[operatorIndex + 1];
+    while (tokens.find(isAddOrSubOperator)) {
+      const operatorIndex = tokens.findIndex(isAddOrSubOperator);
+      const operator = tokens[operatorIndex];
+      const operand1 = tokens[operatorIndex - 1];
+      const operand2 = tokens[operatorIndex + 1];
 
       const operation = isAddOperator(operator) ? add : sub;
       const result = operation(operand1.value, operand2.value);
 
       // вместо первого операнда вставить результат
-      _tokens[operatorIndex - 1] = new Token(LITERAL, result);
+      tokens[operatorIndex - 1] = new Token(LITERAL, result);
 
       // удалить оператор и второй операнд
-      _tokens.splice(operatorIndex, 2);
+      tokens.splice(operatorIndex, 2);
 
-      this.steps.push(new TokensCollection([..._tokens]));
+      this._fixStep('collapse add-sub');
     }
 
-    return _tokens;
+    return tokens;
+  }
+
+  _calcNoParentheses(tokens) {
+    return this._collapseAddSub(
+      this._collapseMulDiv(tokens)
+    );
   }
 
   calc() {
-    const binaryCalc = pipe(
-      this._collapseMulDiv.bind(this),
-      this._collapseAddSub.bind(this),
-    );
+    while (this.tokens.find(isParenthesis)) {
+      // найти индекс последней открывающей скобки
+      let left_parentheses_index = this.tokens.findLastIndex(isLeftParenthesis);
+      if (~left_parentheses_index) {
 
-    return binaryCalc(this.tokens);
+        // найти первую закрывающую скобк идущую после найденой откварющей скобки
+        const right_parentheses_index = this.tokens.findIndexFrom(isRightParenthesis, left_parentheses_index + 1);
+
+        // вычисляем внутренние токены которые уже без скобок
+        const inside_tokens = this.tokens.slice(left_parentheses_index + 1, right_parentheses_index);
+        const result_tokens = this._calcNoParentheses(inside_tokens);
+
+        // replace inside tokens
+        const before_tokes = this.tokens.slice(0, left_parentheses_index);
+        const after_tokes = this.tokens.slice(right_parentheses_index + 1);
+        this.tokens = [...before_tokes, ...result_tokens, ...after_tokes];
+        this._fixStep('collapse parentheses');
+      }
+    }
+
+    return this._calcNoParentheses(this.tokens);
   }
 
 }

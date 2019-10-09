@@ -1,4 +1,5 @@
-import {Tokenizer} from './tokenizer.js';
+import {Tokenizer, TokensCollection} from './tokenizer.js';
+import {Calculator} from "./calculator.js";
 
 (function () {
 
@@ -13,13 +14,16 @@ import {Tokenizer} from './tokenizer.js';
 
     const tokens = Tokenizer.tokenize(expression);
 
-    // show tokens
-    const tokensDebug = tokens.reduce(function (arr, token, index) {
-      const line = index + " => " + token.type + "(" + token.value + ")";
-      arr.push(line);
-      return arr;
-    }, []);
-    tokensEl.innerHTML = 'tokens:\n' + tokensDebug.join('\n');
+    const calculator = new Calculator(tokens);
+    const resultTokens = calculator.calc();
+
+    // show steps
+    tokensEl.innerHTML = '';
+    calculator.steps.forEach((step, index) => {
+      tokensEl.innerHTML += `step ${index}: ${step.name}\n` + step.tokens + '\n\n';
+    });
+
+    // tokensEl.innerHTML += '\n\nresult:\n' + new TokensCollection(resultTokens);
   })
 
 })();
