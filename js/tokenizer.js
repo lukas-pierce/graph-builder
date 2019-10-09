@@ -10,7 +10,7 @@ export const LITERAL = 'LITERAL';
 export class Tokenizer {
 
   static tokenize(str) {
-    str.replace(/\s+/g, "");
+    str = str.replace(/\s+/g, "");
     str = str.split("");
 
     const result = [];
