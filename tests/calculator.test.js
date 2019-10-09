@@ -16,7 +16,6 @@ let cases = [
    * ...
    */
 
-
   // add
   {expression: '1 + 2', should: 3},
   {expression: '1 + -2', should: -1},
@@ -37,9 +36,10 @@ let cases = [
   // div
   {expression: '2 / 2', should: 1},
   {expression: '8 / 2 / 2', should: 2},
-  // todo zero division exception
+  {expression: '1 / 0', should: Infinity},
 
   // pow
+  {expression: '123^0', should: 1},
   {expression: '2^2', should: 4},
   {expression: '2^3', should: 8},
   {expression: '2^2^2', should: 16},
@@ -57,6 +57,7 @@ let cases = [
   {expression: 'sum(1,2,3)', should: 6},
 
   // variables
+  {expression: 'x', should: 21, variables: {x: 21}},
   {expression: '2 * x', should: 10, variables: {x: 5}},
   {expression: '2 * x + a', should: 13, variables: {x: 5, a: 3}},
   // todo not found variable exception
