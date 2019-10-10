@@ -70,3 +70,4 @@ npm run test
 
 ### TODO 
 - validate expression
+- expression simplification, prepare before replace variables
