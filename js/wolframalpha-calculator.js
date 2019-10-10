@@ -4,16 +4,12 @@ const WOLFRAM_ALPHA_APP_ID = '9G6YK7-Y8QVUUAWLQ';
 const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
 
 async function wolframAlphaQuery(input) {
-  let uri = `http://api.wolframalpha.com/v2/query?` +
-    `input=${input}` +
-    `&appid=${WOLFRAM_ALPHA_APP_ID}` +
-    `&format=plaintext` +
-    `&output=json` +
-    `&includepodid=Result`;
-
-  uri = encodeURI(uri);
-
-  // console.log(uri);
+  let uri = 'http://api.wolframalpha.com/v2/query?' +
+    'input=' + encodeURIComponent(input) +
+    '&appid=' + WOLFRAM_ALPHA_APP_ID +
+    '&format=plaintext' +
+    '&output=json' +
+    '&includepodid=Result';
 
   return await fetch(proxyUrl + uri);
 }
@@ -24,9 +20,8 @@ export class WolframAlphaCalculator {
     // const variable = 'x';
     // const range = [0.7, 10, 4];
 
-    // build input for Wolfram Alpha. Example: 'calc x * 2 where x is 0.7, 10, 4'
-    const input = `calc ${expression} where ${variable} = {` + range.join(', ') + `}`;
-    console.log({input});
+    // build input for Wolfram Alpha. Example: 'x * 2 where x is 0.7, 10, 4'
+    const input = `${expression} where ${variable} = {` + range.join(', ') + `}`;
 
     const response = await wolframAlphaQuery(input);
     const json = await response.json();

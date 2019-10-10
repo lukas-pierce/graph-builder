@@ -96,11 +96,11 @@ import {range} from './math.js';
     // read range
     const variableRange = valuesInput.value.trim().toLocaleLowerCase();
     if (!variableRange) return valuesInput.focus();
-    if (!/^[\d;\-+.]+$/.test(variableRange)) {
+    if (!/^[\d,\-+.]+$/.test(variableRange)) {
       alert('invalid range format');
       return valuesInput.focus();
     }
-    const range = variableRange.split(/\s*;\s*/).map(x => parseFloat(x));
+    const range = variableRange.split(/\s*,\s*/).map(x => parseFloat(x));
 
     // read variable name
     const variable = variableNameInput.value.trim().toLocaleLowerCase();
@@ -117,12 +117,34 @@ import {range} from './math.js';
     run();
   });
 
+  clearResult();
 
-  // example range
-  expressionInput.value = '-sin(x * -2) + x / 2';
-  variableNameInput.value = 'x';
-  valuesInput.value = range(-6, 6, 0.1).map(x => x.toFixed(2)).join(';');
-  run();
+  // demos
+  const demos = {
+    lukas() {
+      form.querySelector('input[name="calculator"][value="lukas"]').click();
+      expressionInput.value = '-sin(x * -2) + x / 2';
+      variableNameInput.value = 'x';
+      valuesInput.value = range(-6, 6, 0.1).map(x => x.toFixed(2)).join(',');
+      run();
+    },
+    wolfram() {
+      form.querySelector('input[name="calculator"][value="wolfram"]').click();
+      expressionInput.value = 'x^2';
+      variableNameInput.value = 'x';
+      valuesInput.value = range(-6, 6, 0.5).map(x => x.toFixed(1)).join(',');
+      run();
+    }
+  };
 
+  function onDemoLinkClick(e) {
+    e.preventDefault();
+    const demoName = this.dataset.demo;
+    demos[demoName] && demos[demoName]();
+  }
+
+  Array.from(document.getElementsByClassName("demo-link")).forEach(function (link) {
+    link.addEventListener('click', onDemoLinkClick)
+  });
 
 })();

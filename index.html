@@ -20,14 +20,19 @@
       </div>
       <label for="expression">Input Math Expression</label>
       <input name="expression" id="expression" class="form-control" autocomplete="off" placeholder="Math Expression">
-      <input name="variableName" maxlength="1" class="form-control" autocomplete="off" placeholder="Variable name">
-      <input name="values" id="values" class="form-control" autocomplete="off" placeholder="Values Range use ; for separation">
+      <input name="variableName" id="" maxlength="1" class="form-control" autocomplete="off" placeholder="Variable name">
+      <input name="values" id="values" class="form-control" autocomplete="off" placeholder="Values Range use , for separation and . for floats">
       <button type="submit" class="btn">Submit</button>
     </form>
     <pre id="result"></pre>
   </div>
   <div class="col-right">
     <canvas id="canvas" width="500" height="500"></canvas>
+    <div class="demo-links">
+      Fast Demo:
+      <a href="#" class="demo-link" data-demo="lukas">Lukas</a>
+      <a href="#" class="demo-link" data-demo="wolfram">Wolfram</a>
+    </div>
   </div>
 </div>
 <script src="./js/index.js" type="module"></script>
