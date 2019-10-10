@@ -142,7 +142,7 @@ export class Calculator {
     }
   }
 
-  applyCustomFunction(fnName, tokens) {
+  _applyCustomFunction(fnName, tokens) {
     const fn = custom_fns[fnName];
     const args = tokens.filter(t => t.type === LITERAL).map(t => t.value);
     return fn(...args);
@@ -173,7 +173,7 @@ export class Calculator {
         const prevToken = before_tokens[before_tokens.length - 1];
         if (prevToken && prevToken.type === FUNCTION && custom_fns_names.includes(prevToken.value)) {
           const fnName = prevToken.value;
-          const res = this.applyCustomFunction(fnName, result_tokens);
+          const res = this._applyCustomFunction(fnName, result_tokens);
           result_tokens = [new Token(LITERAL, res)];
           before_tokens.splice(before_tokens.length - 1, 1);
         }
