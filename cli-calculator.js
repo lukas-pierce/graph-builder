@@ -1,6 +1,7 @@
+require = require('esm')(module);
 const commandLineArgs = require('command-line-args');
 const chalk = require('chalk');
-import {Calculator, CalculatorError} from "./js/calculator.js";
+const {Calculator, CalculatorError} = require('./js/calculator.js');
 
 (() => {
   const options = commandLineArgs([

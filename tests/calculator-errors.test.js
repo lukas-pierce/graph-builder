@@ -1,4 +1,4 @@
-require = require("esm")(module /*, options*/);
+require = require('esm')(module);
 const {Calculator, CalculatorError} = require('../js/calculator');
 const calculator = new Calculator();
 
