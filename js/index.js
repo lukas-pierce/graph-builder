@@ -1,7 +1,7 @@
 import {Calculator, CalculatorError} from './calculator.js';
-import {WolframAlphaCalculator} from './wolframalpha-calculator.js';
+import {WolframAlphaCalculator, WolframError} from './wolframalpha-calculator.js';
 import {Plotter} from './plotter.js';
-import {range} from "./math.js";
+import {range} from './math.js';
 
 (function () {
 
@@ -14,7 +14,6 @@ import {range} from "./math.js";
   const canvas = document.getElementById('canvas');
   const calculator = new Calculator();
   const plotter = new Plotter();
-  plotter.render(canvas, []);
 
   function disableSubmitButton(disable) {
     if (disable) {
@@ -26,13 +25,25 @@ import {range} from "./math.js";
     }
   }
 
-  function renderResultPoints(points) {
+  function renderResult(points) {
     resultEl.innerHTML = points.reduce((str, point) => {
       str += `(${point[0]}, ${point[1]})\n`;
       return str;
     }, '');
 
     plotter.render(canvas, points);
+  }
+
+  function clearResult() {
+    plotter.render(canvas, []);
+    resultEl.innerHTML = '';
+  }
+
+  function renderCalcError(e) {
+    resultEl.innerHTML = '<span class="error">' +
+      e.constructor.name + ':\n' + // error name
+      e.message +
+      '</span>'
   }
 
   const calculators = {
@@ -43,22 +54,31 @@ import {range} from "./math.js";
           const y = calculator.calc(expression, variables);
           return [value, y];
         });
-        renderResultPoints(points);
+        renderResult(points);
       } catch (e) {
         if (e instanceof CalculatorError) {
-          resultEl.innerHTML = '<span class="error">' + e.message + '</span>'
+          renderCalcError(e);
         } else throw e
       }
     },
     async wolfram({expression, variable, range}) {
-      disableSubmitButton(true);
-      const points = await WolframAlphaCalculator.calc({expression, variable, range});
-      disableSubmitButton(false);
-      renderResultPoints(points);
+      try {
+        disableSubmitButton(true);
+        const points = await WolframAlphaCalculator.calc({expression, variable, range});
+        renderResult(points);
+      } catch (e) {
+        if (e instanceof WolframError) {
+          renderCalcError(e);
+        } else throw e
+      } finally {
+        disableSubmitButton(false);
+      }
     }
   };
 
   function run() {
+    clearResult();
+
     // get calculator type
     const checkedCalculatorType = form.querySelector('input[name=calculator]:checked');
     if (!checkedCalculatorType) {
