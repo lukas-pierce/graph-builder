@@ -21,7 +21,7 @@
     - `1 / +--1`
     - `1 +++ -----1`
     - ...
-- Custom functions: `sqrt`, `sin`, `cos`, etc. Easy expandable in: `calculator.js`
+- Custom functions: `sqrt`, `sin`, `cos`, etc. Easily extensible in: `calculator.js`
 
 ```javascript
 const custom_fns = {
@@ -47,6 +47,8 @@ const custom_fns = {
 
 };
 ```
+
+- Wolfram Alpha as alternative parser
     
 ### CLI
 For run calculator from CLI use:
@@ -60,7 +62,7 @@ node cli-calculator --expression="2 * 2"
 > ⚠️ **Warning**: CLI doesn't support variables. But it ease to improve.
 
 ### Testing
-For testing uses jest. For run tests
+For testing uses [Jest](https://jestjs.io/):
 
 ```
 npm run test
