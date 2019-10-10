@@ -20,3 +20,12 @@ test('throws variable is not number: x + x, x = \'a\'', () => {
   expect(calc).toThrowError(CalculatorError);
   expect(calc).toThrowError('variable is not number');
 });
+
+// unknown function
+test('throws unknown function: some(100)', () => {
+  function calc() {
+    calculator.calc('some(100)');
+  }
+  expect(calc).toThrowError(CalculatorError);
+  expect(calc).toThrowError('unknown function');
+});

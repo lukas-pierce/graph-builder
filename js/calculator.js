@@ -171,11 +171,15 @@ export class Calculator {
 
         // проверяем предыдущий токен является функцией
         const prevToken = before_tokens[before_tokens.length - 1];
-        if (prevToken && prevToken.type === FUNCTION && custom_fns_names.includes(prevToken.value)) {
+        if (prevToken && prevToken.type === FUNCTION) {
           const fnName = prevToken.value;
-          const res = this._applyCustomFunction(fnName, result_tokens);
-          result_tokens = [new Token(LITERAL, res)];
-          before_tokens.splice(before_tokens.length - 1, 1);
+          if (custom_fns_names.includes(fnName)) {
+            const res = this._applyCustomFunction(fnName, result_tokens);
+            result_tokens = [new Token(LITERAL, res)];
+            before_tokens.splice(before_tokens.length - 1, 1);
+          } else {
+            throw new CalculatorError('unknown function: ' + fnName);
+          }
         }
 
         tokens = [...before_tokens, ...result_tokens, ...after_tokens];
