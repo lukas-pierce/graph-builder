@@ -136,7 +136,7 @@ export class Calculator {
 
           tokens[i] = new Token(LITERAL, variableValue);
         } else {
-          throw new CalculatorError(`undefined variable in expression: <b>${variableName}</b>`);
+          throw new CalculatorError(`undefined variable in expression: ${variableName}`);
         }
       }
     }
