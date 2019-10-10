@@ -2,6 +2,8 @@
 
 ![demo screenshot](./demo-pic.jpg "Math Expression Parser and Graph Builder")
 
+**[LIVE DEMO](https://math.lukas-pierce.com/)**
+
 ### Features
 - Basic Math: 
     - addiction
