@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "calculator": "node -r esm cli-calculator.js"
+    "calculator": "node cli-calculator"
   },
   "author": "",
   "license": "ISC",
