@@ -1,6 +1,6 @@
 const commandLineArgs = require('command-line-args');
 const chalk = require('chalk');
-import {Calculator} from "./js/calculator.js";
+import {Calculator, CalculatorError} from "./js/calculator.js";
 
 (() => {
   const options = commandLineArgs([
@@ -12,7 +12,14 @@ import {Calculator} from "./js/calculator.js";
     return console.log(chalk.red('Error: expression required'));
   }
 
-  const calculator = new Calculator();
-  const res = calculator.calc(expression);
-  console.log(res);
+  try {
+    const calculator = new Calculator();
+    const res = calculator.calc(expression);
+    console.log(chalk.green(res));
+  } catch (e) {
+    if (e instanceof CalculatorError) {
+      console.log(chalk.red('CalculatorError: ' + e.message));
+    } else throw e;
+  }
+
 })();
