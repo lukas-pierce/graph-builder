@@ -51,6 +51,10 @@ For run calculator from CLI use:
 ```
 npm run calculator -- --expression="2 * 2"
 ```
+or
+```
+node cli-calculator --expression="2 * 2"
+```
 > ⚠️ **Warning**: CLI doesn't support variables. But it ease to improve.
 
 ### Testing
