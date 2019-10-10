@@ -59,7 +59,7 @@ or
 ```
 node cli-calculator --expression="2 * 2"
 ```
-> ⚠️ **Warning**: CLI doesn't support variables. But it ease to improve.
+> ⚠️ **Warning**: CLI doesn't support variables. But it’s easy to improve.
 
 ### Testing
 For testing uses [Jest](https://jestjs.io/):
